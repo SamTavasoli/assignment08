@@ -1,9 +1,9 @@
 // CREATE AN ARRAY OF EMPLOYEES
-let employees = [];
+let employeeList = [];
 
 // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
-if (localStorage.getItem('employees')) {
-    employees = JSON.parse(localStorage.getItem('employees'));
+if (localStorage.getItem('employeeList')) {
+    employeeList = JSON.parse(localStorage.getItem('employeeList'));
 }
 
 // GET DOM ELEMENTS
@@ -28,7 +28,7 @@ form.addEventListener('submit', (e) => {
     };
 
     // ADD THE NEW EMPLOYEE TO A NEW ARRAY OBJECT
-    employees.push(employee);
+    employeeList.push(employee);
 
     // BUILD THE GRID
     buildGrid();
@@ -46,7 +46,7 @@ empTable.addEventListener('click', (e) => {
         if (confirm('Are you sure you want to delete this employee?')) {
             // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
             let rowIndex = e.target.parentNode.parentNode.rowIndex;
-            employees.splice(rowIndex - 1, 1);
+            employeeList.splice(rowIndex - 1, 1);
 
             // BUILD THE GRID
             buildGrid();
@@ -61,7 +61,7 @@ function buildGrid() {
     tbody.innerHTML = '';
 
     // REBUILD THE TBODY FROM SCRATCH
-    employees.forEach((employee, index) => {
+    employeeList.forEach((employee, index) => {
         let row = tbody.insertRow();
         Object.values(employee).forEach(text => {
             let cell = row.insertCell();
@@ -75,7 +75,7 @@ function buildGrid() {
         deleteButton.className = 'btn btn-danger';
         deleteButton.onclick = function() {
             if (confirm('Are you sure you want to delete this employee?')) {
-                employees.splice(index, 1);
+                employeeList.splice(index, 1);
                 buildGrid();
             }
         };
@@ -84,10 +84,11 @@ function buildGrid() {
 
     // BIND THE TBODY TO THE EMPLOYEE TABLE
     empTable.appendChild(tbody);
-
+    console.log(document.getElementById('employeeCount'));
     // UPDATE EMPLOYEE COUNT
-    empCount.innerText = employees.length;
+    document.getElementById('employeeCount').innerText = employeeList.length;
+
 
     // STORE THE ARRAY IN STORAGE
-    localStorage.setItem('employees', JSON.stringify(employees));
+    localStorage.setItem('employees', JSON.stringify(employeeList));
 };
