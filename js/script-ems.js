@@ -4,14 +4,12 @@ let employees = [];
 // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
 if (localStorage.getItem('employees')) {
     employees = JSON.parse(localStorage.getItem('employees'));
-} else {
-    // Populate with a default set of employees or leave it empty
 }
 
 // GET DOM ELEMENTS
 const form = document.getElementById('addEmployeeForm');
 const empTable = document.getElementById('employeesTable');
-const empCount = document.getElementById('employeeCount'); // Assuming this element exists for employee count
+const empCount = document.getElementById('employeeCount');
 
 // BUILD THE EMPLOYEES TABLE WHEN THE PAGE LOADS
 document.addEventListener('DOMContentLoaded', buildGrid);
@@ -48,7 +46,7 @@ empTable.addEventListener('click', (e) => {
         if (confirm('Are you sure you want to delete this employee?')) {
             // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
             let rowIndex = e.target.parentNode.parentNode.rowIndex;
-            employees.splice(rowIndex - 1, 1); // -1 because row indexes are 1-based
+            employees.splice(rowIndex - 1, 1);
 
             // BUILD THE GRID
             buildGrid();
@@ -74,7 +72,7 @@ function buildGrid() {
         let deleteCell = row.insertCell();
         let deleteButton = document.createElement('button');
         deleteButton.innerText = 'Delete';
-        deleteButton.className = 'btn btn-danger'; // Assuming Bootstrap for styling
+        deleteButton.className = 'btn btn-danger';
         deleteButton.onclick = function() {
             if (confirm('Are you sure you want to delete this employee?')) {
                 employees.splice(index, 1);
